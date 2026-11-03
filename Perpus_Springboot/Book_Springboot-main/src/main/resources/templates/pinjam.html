@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pinjam Buku</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #1e3a5f;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            font-weight: bold;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 12px;
+            background-color: #1e3a5f;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #294f7c;
+        }
+
+        .error {
+            background-color: #ffe5e5;
+            color: #b00020;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #1e3a5f;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Form Peminjaman Buku</h2>
+
+    <div class="error"
+         th:if="${error}"
+         th:text="${error}">
+    </div>
+
+    <form th:action="@{/pinjam}" method="post">
+
+        <label for="idAnggota">Pilih Anggota</label>
+
+        <select id="idAnggota"
+                name="idAnggota"
+                required>
+
+            <option value="">-- Pilih Anggota --</option>
+
+            <option th:each="anggota : ${anggotaList}"
+                    th:value="${anggota.idAnggota}"
+                    th:text="${anggota.nama}">
+            </option>
+
+        </select>
+
+        <label for="idBuku">Pilih Buku</label>
+
+        <select id="idBuku"
+                name="idBuku"
+                required>
+
+            <option value="">-- Pilih Buku --</option>
+
+            <option th:each="buku : ${bukuList}"
+                    th:value="${buku.idBuku}"
+                    th:text="${buku.judul + ' (Stok: ' + buku.stok + ')'}">
+            </option>
+
+        </select>
+
+        <label for="jumlah">Jumlah Buku</label>
+
+        <input type="number"
+               id="jumlah"
+               name="jumlah"
+               min="1"
+               value="1"
+               required>
+
+        <button type="submit">
+            Pinjam Buku
+        </button>
+
+    </form>
+
+    <a href="/" class="back">
+        Kembali ke Beranda
+    </a>
+
+</div>
+
+</body>
+</html>
